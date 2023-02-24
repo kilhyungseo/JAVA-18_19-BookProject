@@ -36,6 +36,8 @@ import bookManager.WinBookDelete;
 import bookManager.WinBookInsert;
 import bookManager.WinBookUpdate;
 import bookManager.WinComboSearch;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
 
 public class WinMain extends JDialog {
 	private static JTable table;
@@ -56,6 +58,7 @@ public class WinMain extends JDialog {
 			}
 		});
 	}
+	private static JLabel lblIsnbP;
 
 	/**
 	 * Create the dialog.
@@ -266,7 +269,7 @@ public class WinMain extends JDialog {
 		toolBar.add(btnBookSearch);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(0, 87, 652, 351);
+		scrollPane.setBounds(0, 87, 652, 329);
 		getContentPane().add(scrollPane);
 		
 		String[] header = {"ISBN", "제목", "작가", "출판사", "출판일", "가격", "수량"};
@@ -327,6 +330,19 @@ public class WinMain extends JDialog {
 		});
 		popupMenu.add(mnUpdate);
 		scrollPane.setViewportView(table);
+		
+		JPanel panel = new JPanel();
+		panel.setBounds(0, 412, 652, 26);
+		getContentPane().add(panel);
+		panel.setLayout(null);
+		
+		JLabel lblIsbn = new JLabel("\uD604\uC7AC \uC120\uD0DD\uD55C \uB3C4\uC11C\uC640 \uC800\uC790 : ");
+		lblIsbn.setBounds(1, 5, 152, 21);
+		panel.add(lblIsbn);
+		
+		lblIsnbP = new JLabel("");
+		lblIsnbP.setBounds(148, 8, 504, 15);
+		panel.add(lblIsnbP);
 		table.getColumn("제목").setPreferredWidth(200);
 		table.getColumn("수량").setPreferredWidth(50);
 		
@@ -409,6 +425,8 @@ public class WinMain extends JDialog {
 					WinBookUpdate winBookUpdate = new WinBookUpdate(table.getValueAt(table.getSelectedRow(), 0).toString());
 					winBookUpdate.setModal(true);
 					winBookUpdate.setVisible(true);
+				}else {
+					lblIsnbP.setText(table.getValueAt(table.getSelectedRow(), 1).toString() + " -- " + table.getValueAt(table.getSelectedRow(), 2).toString());
 				}
 					
 			}
