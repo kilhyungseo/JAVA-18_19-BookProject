@@ -38,7 +38,7 @@ import bookManager.WinBookUpdate;
 import bookManager.WinComboSearch;
 
 public class WinMain extends JDialog {
-	private JTable table;
+	private static JTable table;
 
 	/**
 	 * Launch the application.
@@ -215,9 +215,19 @@ public class WinMain extends JDialog {
 					winComboSearch.setModal(true);
 					winComboSearch.setVisible(true);
 				}else {
-					WinBookDelete winBookDelete = new WinBookDelete(table.getValueAt(table.getSelectedRow(), 0).toString());
-					winBookDelete.setModal(true);
-					winBookDelete.setVisible(true);
+					int rowIndex[] = table.getSelectedRows();
+					
+					if(rowIndex.length > 1) {
+					for(int i=0; i<rowIndex.length; i++) {
+						WinBookDelete winBookDelete = new WinBookDelete(table.getValueAt(rowIndex[i], 0).toString());
+						winBookDelete.setModal(true);
+						winBookDelete.setVisible(true);
+						}
+					}else {
+						WinBookDelete winBookDelete = new WinBookDelete(table.getValueAt(table.getSelectedRow(), 0).toString());
+						winBookDelete.setModal(true);
+						winBookDelete.setVisible(true);	
+					}
 				}
 			}
 		});
@@ -287,10 +297,20 @@ public class WinMain extends JDialog {
 		JMenuItem mnDelete = new JMenuItem("\uC0AD\uC81C");
 		mnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int row = table.getSelectedRow();
-				WinBookDelete winBookDelete = new WinBookDelete(table.getValueAt(row, 0).toString());
-				winBookDelete.setModal(true);
-				winBookDelete.setVisible(true);
+				
+				int rowIndex[] = table.getSelectedRows();
+				
+				if(rowIndex.length > 1) {
+				for(int i=0; i<rowIndex.length; i++) {
+					WinBookDelete winBookDelete = new WinBookDelete(table.getValueAt(rowIndex[i], 0).toString());
+					winBookDelete.setModal(true);
+					winBookDelete.setVisible(true);
+					}
+				}else {
+					WinBookDelete winBookDelete = new WinBookDelete(table.getValueAt(table.getSelectedRow(), 0).toString());
+					winBookDelete.setModal(true);
+					winBookDelete.setVisible(true);	
+				}
 				
 			}
 		});
@@ -382,6 +402,15 @@ public class WinMain extends JDialog {
 			}
 			private void showMenu(MouseEvent e) {
 				popup.show(e.getComponent(), e.getX(), e.getY());
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(e.getClickCount() == 2) {
+					WinBookUpdate winBookUpdate = new WinBookUpdate(table.getValueAt(table.getSelectedRow(), 0).toString());
+					winBookUpdate.setModal(true);
+					winBookUpdate.setVisible(true);
+				}
+					
 			}
 		});
 	}

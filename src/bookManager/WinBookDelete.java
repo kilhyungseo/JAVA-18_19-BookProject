@@ -265,27 +265,19 @@ public class WinBookDelete extends JDialog {
              System.out.println("DB 연결 완료");               
              Statement statement=conn.createStatement();
              //=============================================
-             String sql = "INSERT INTO bookTbl VALUES(?,?,?,?,?,?,?,?,?)";
+             String sql = "DELETE FROM bookTbl WHERE isbn=?";
              
              PreparedStatement pstmt = conn.prepareStatement(sql);
              
              pstmt.setString(1, tfIsbn.getText());
-             pstmt.setString(2, tfTitle.getText());
-             pstmt.setString(3, tfAuthor.getText());
-             pstmt.setString(4, tfPublisher.getText());
-             pstmt.setString(5, tfPubdate.getText());
-             pstmt.setString(6, sUrl);
-             pstmt.setString(7, tfPrice.getText());
-             pstmt.setString(8, taDescription.getText());
-             pstmt.setString(9, spinner.getValue().toString());
-             
+            
              int result = pstmt.executeUpdate();
              
              
              if(result == 1){//중복
-            	 JOptionPane.showMessageDialog(getContentPane(), "입력되었습니다");
+            	 JOptionPane.showMessageDialog(getContentPane(), "삭제되었습니다");
              }else {
-            	 System.out.println("입력실패");
+            	 System.out.println("삭제실패");
              }
              
              pstmt.close();
