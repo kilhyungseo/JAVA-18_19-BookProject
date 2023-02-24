@@ -347,8 +347,14 @@ public class WinMain extends JDialog {
 		table.getColumn("수량").setPreferredWidth(50);
 		
 		
-		showTable();
+		//showTable();
 
+	}
+
+
+	public WinMain(DefaultTableModel dtm) {
+		this();
+		table.setModel(dtm);
 	}
 
 
